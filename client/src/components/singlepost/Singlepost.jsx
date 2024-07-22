@@ -1,12 +1,14 @@
 import { useParams,Link } from "react-router-dom"
 import "./singlepost.css"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios  from "axios"
+import { Context } from "../../context/Context";
 
 
 function Singlepost() {
-    const [post, setPost]=useState()
-    const {postId}= useParams()
+    const [post, setPost]=useState();
+    const {postId}= useParams();
+    const {user} =useContext(Context);
     console.log(post)
     useEffect(()=>{
         const fetchPosts=async()=>{
@@ -16,6 +18,11 @@ function Singlepost() {
         }
         fetchPosts();
     },[postId])
+
+    const handleDelete=async()=>{
+
+    }
+
     return (
         <div className="singlepost">
             {post && <div className="singlepostwrapper">
@@ -27,10 +34,12 @@ function Singlepost() {
                 <h1 className="singlepostTitle">
                     
                     {post.title}
+                    {post.username===user?.username &&(
                     <div className="singlepostEdit">
                     <i className="singlepostIcon fa-regular fa-pen-to-square"></i>
                     <i className="singlepostIcon fa-solid fa-trash-can"></i>
                     </div>
+                    )}
                 </h1>
                 <div className="singlepostInfo">
                     <span className="singlepostAuthor">Author:
